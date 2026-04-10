@@ -10,5 +10,88 @@
 <body>
   <div id="nc-root"></div>
   <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+  <script>
+    // Usar proxy OAuth gratuito de https://github.com/vencax/netlify-cms-github-oauth-provider
+    // Este proxy es mantenido por la comunidad y funciona sin configuración propia
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'amartinrojarvis/starsTrek-isla-hierro',
+          branch: 'main',
+          base_url: 'https://cms-auth.herokuapp.com',
+          auth_endpoint: 'auth'
+        },
+        media_folder: 'public/images/uploads',
+        public_folder: '/images/uploads',
+        collections: [
+          {
+            name: 'ponentes',
+            label: '📸 Ponentes',
+            folder: 'src/content/ponentes',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: 'Nombre', name: 'nombre', widget: 'string', required: true },
+              { label: 'Rol / Título', name: 'rol', widget: 'string', required: true, hint: 'Ej: Astrofotógrafo Canario' },
+              { label: 'Foto de Retrato', name: 'fotoRetrato', widget: 'image', required: false, hint: 'Imagen cuadrada, preferiblemente 400x400px' },
+              { label: 'Biografía', name: 'bio', widget: 'text', required: true },
+              { label: 'Instagram', name: 'instagram', widget: 'string', required: false },
+              { label: 'Web Personal', name: 'web', widget: 'string', required: false },
+              { label: 'Orden', name: 'orden', widget: 'number', default: 99, value_type: 'int', min: 1, max: 100 }
+            ]
+          },
+          {
+            name: 'programa',
+            label: '📅 Programa',
+            folder: 'src/content/programa',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: 'Día de la semana', name: 'dia', widget: 'string', required: true },
+              { label: 'Fecha', name: 'fecha', widget: 'string', required: true },
+              { 
+                label: 'Horarios', 
+                name: 'horarios', 
+                widget: 'list',
+                fields: [
+                  { label: 'Hora', name: 'hora', widget: 'string', required: true },
+                  { label: 'Tipo', name: 'tipo', widget: 'select', options: [
+                    { label: '🚪 Apertura/Registro', value: 'apertura' },
+                    { label: '🎤 Inauguración', value: 'inauguracion' },
+                    { label: '📢 Ponencia', value: 'ponencia' },
+                    { label: '☕ Break/Coffee', value: 'break' },
+                    { label: '🎓 Taller', value: 'taller' },
+                    { label: '🏁 Clausura', value: 'clausura' },
+                    { label: '⭐ Actividad especial', value: 'actividad' }
+                  ]},
+                  { label: 'Título', name: 'titulo', widget: 'string', required: true },
+                  { label: 'Ponente/Responsable', name: 'ponente', widget: 'string', required: false },
+                  { label: 'Descripción', name: 'descripcion', widget: 'text', required: false }
+                ]
+              }
+            ]
+          },
+          {
+            name: 'talleres',
+            label: '🎓 Talleres',
+            folder: 'src/content/talleres',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: 'Título del Taller', name: 'titulo', widget: 'string', required: true },
+              { label: 'Instructor', name: 'instructor', widget: 'string', required: true },
+              { label: 'Fecha', name: 'fecha', widget: 'string', required: true },
+              { label: 'Hora', name: 'hora', widget: 'string', required: true },
+              { label: 'Duración', name: 'duracion', widget: 'string', required: true },
+              { label: 'Aforo máximo', name: 'aforo', widget: 'string', required: true },
+              { label: 'Descripción', name: 'descripcion', widget: 'text', required: true },
+              { label: 'Destacado', name: 'destacado', widget: 'boolean', default: false }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
