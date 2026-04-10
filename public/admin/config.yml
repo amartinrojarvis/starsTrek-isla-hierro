@@ -4,6 +4,7 @@ backend:
   branch: main
   base_url: https://starstrek-web.vercel.app
   auth_endpoint: api/auth
+  auth_scope: repo
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"

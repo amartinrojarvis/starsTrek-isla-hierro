@@ -5,51 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Admin - StarsTrek Isla del Hierro</title>
-  <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css">
-  <style>
-    /* Personalización del CMS para StarsTrek */
-    :root {
-      --primary-color: #3b82f6;
-      --primary-color-dark: #1e3a8a;
-    }
-    
-    [class*="SidebarContainer"] {
-      background: linear-gradient(180deg, #0f172a 0%, #0a0a0a 100%) !important;
-    }
-    
-    [class*="SidebarHeader"] {
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
-      border-bottom: 2px solid #3b82f6 !important;
-    }
-    
-    [class*="StyledButton"],
-    button[class*="Button"] {
-      background: var(--primary-color) !important;
-    }
-    
-    [class*="StyledButton"]:hover,
-    button[class*="Button"]:hover {
-      background: var(--primary-color-dark) !important;
-    }
-    
-    a, [class*="Active"] {
-      color: var(--primary-color) !important;
-    }
-    
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--primary-color) !important;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-    }
-  </style>
+  <link rel="stylesheet" href="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.css">
 </head>
 <body>
   <div id="nc-root"></div>
-  
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <script>
-    // Solo inicializar, sin personalizaciones que causen errores
-    CMS.init();
-  </script>
+  <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
 </body>
 </html>
