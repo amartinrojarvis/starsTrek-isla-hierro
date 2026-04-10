@@ -1,5 +1,5 @@
 ---
-// Página de administración que redirige a GitHub para edición
+// Página de administración con opciones de edición
 ---
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editar Contenido - StarsTrek</title>
+  <title>Panel de Administración - StarsTrek</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
@@ -195,10 +195,33 @@
       <p class="subtitle">Elige cómo quieres editar el contenido de StarsTrek</p>
     </header>
     
-    <!-- MÉTODO 1: GitHub Web Editor -->
+    <!-- MÉTODO 1: Editor Visual Decap CMS -->
     <div class="method-card">
-      <h2>🚀 MÉTODO RECOMENDADO: GitHub Web</h2>
-      <p>Edita directamente desde la interfaz web de GitHub. Los cambios se publican automáticamente en menos de 2 minutos.</p>
+      <h2>🎨 EDITOR VISUAL (Decap CMS)</h2>
+      <p>Interfaz visual tipo WordPress para editar contenido sin ver código. <strong>Requiere configuración OAuth.</strong></p>
+      
+      <div class="file-grid">
+        <div class="file-item" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none;">
+          <h4 style="color: white;">✨ Interfaz Visual</h4>
+          <p style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 10px 0;">
+            Formularios amigables para editar ponentes, programa y talleres sin tocar código.
+          </p>
+          <a href="/admin/" style="background: white; color: #1e3a8a; display: inline-block; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 10px;">
+            Abrir Editor Visual →
+          </a>
+        </div>
+      </div>
+      
+      <div class="warning" style="margin-top: 20px;">
+        <strong>⚠️ Importante:</strong> Para usar el editor visual necesitas configurar GitHub OAuth primero. 
+        <a href="/admin/setup.html" style="color: #3b82f6;">Ver guía de configuración →</a>
+      </div>
+    </div>
+    
+    <!-- MÉTODO 2: GitHub Web Editor -->
+    <div class="method-card">
+      <h2>🚀 MÉTODO RÁPIDO: GitHub Web</h2>
+      <p>Edita directamente desde la interfaz web de GitHub. <strong>Sin configuración adicional.</strong> Los cambios se publican automáticamente en menos de 2 minutos.</p>
       
       <div class="file-grid">
         <div class="file-item">

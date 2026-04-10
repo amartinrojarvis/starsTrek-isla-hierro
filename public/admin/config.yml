@@ -1,0 +1,236 @@
+backend:
+  name: github
+  repo: amartinrojarvis/starsTrek-isla-hierro
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Configuración de editorial workflow (opcional)
+publish_mode: editorial_workflow
+
+# Configuración de idioma
+locale: 'es'
+
+# Colecciones
+collections:
+  - name: "ponentes"
+    label: "📸 Ponentes"
+    label_singular: "Ponente"
+    folder: "src/content/ponentes"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    preview_path: ""
+    editor:
+      preview: false
+    fields:
+      - label: "Nombre"
+        name: "nombre"
+        widget: "string"
+        required: true
+      
+      - label: "Rol / Título"
+        name: "rol"
+        widget: "string"
+        required: true
+        hint: "Ej: Astrofotógrafo Canario"
+      
+      - label: "Foto de Retrato"
+        name: "fotoRetrato"
+        widget: "image"
+        required: false
+        hint: "Imagen cuadrada, preferiblemente 400x400px"
+        media_library:
+          config:
+            multiple: false
+      
+      - label: "Biografía"
+        name: "bio"
+        widget: "text"
+        required: true
+        hint: "Descripción corta (1-2 párrafos)"
+      
+      - label: "Instagram"
+        name: "instagram"
+        widget: "string"
+        required: false
+        hint: "URL completa, ej: https://instagram.com/usuario"
+      
+      - label: "Web Personal"
+        name: "web"
+        widget: "string"
+        required: false
+        hint: "URL completa de su web"
+      
+      - label: "Orden de aparición"
+        name: "orden"
+        widget: "number"
+        default: 99
+        value_type: "int"
+        min: 1
+        max: 100
+        hint: "Número menor = aparece primero"
+      
+      - label: "Galería de Trabajos"
+        name: "galeria"
+        widget: "list"
+        required: false
+        summary: '{{fields.titulo}}'
+        fields:
+          - label: "Imagen"
+            name: "url"
+            widget: "image"
+            required: true
+          - label: "Título de la obra"
+            name: "titulo"
+            widget: "string"
+            required: false
+      
+      - label: "Biografía Extendida"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "Texto largo opcional con formato Markdown"
+
+  - name: "programa"
+    label: "📅 Programa"
+    label_singular: "Día"
+    folder: "src/content/programa"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Día de la semana"
+        name: "dia"
+        widget: "string"
+        required: true
+        hint: "Ej: Viernes"
+      
+      - label: "Fecha"
+        name: "fecha"
+        widget: "string"
+        required: true
+        hint: "Ej: 5 de Junio"
+      
+      - label: "Horarios"
+        name: "horarios"
+        widget: "list"
+        summary: '{{fields.hora}} - {{fields.titulo}}'
+        fields:
+          - label: "Hora"
+            name: "hora"
+            widget: "string"
+            required: true
+            hint: "Ej: 18:00"
+          
+          - label: "Tipo de actividad"
+            name: "tipo"
+            widget: "select"
+            required: true
+            options:
+              - { label: "🚪 Apertura/Registro", value: "apertura" }
+              - { label: "🎤 Inauguración", value: "inauguracion" }
+              - { label: "📢 Ponencia", value: "ponencia" }
+              - { label: "☕ Break/Coffee", value: "break" }
+              - { label: "🎓 Taller", value: "taller" }
+              - { label: "🏁 Clausura", value: "clausura" }
+              - { label: "⭐ Actividad especial", value: "actividad" }
+          
+          - label: "Título"
+            name: "titulo"
+            widget: "string"
+            required: true
+          
+          - label: "Ponente/Responsable"
+            name: "ponente"
+            widget: "string"
+            required: false
+          
+          - label: "Descripción"
+            name: "descripcion"
+            widget: "text"
+            required: false
+          
+          - label: "Destacado"
+            name: "destacado"
+            widget: "boolean"
+            default: false
+            hint: "Marcar para resaltar visualmente"
+      
+      - label: "Descripción del día"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  - name: "talleres"
+    label: "🎓 Talleres"
+    label_singular: "Taller"
+    folder: "src/content/talleres"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Título del Taller"
+        name: "titulo"
+        widget: "string"
+        required: true
+      
+      - label: "Instructor"
+        name: "instructor"
+        widget: "string"
+        required: true
+      
+      - label: "Fecha"
+        name: "fecha"
+        widget: "string"
+        required: true
+        hint: "Ej: Viernes 5 de Junio"
+      
+      - label: "Hora"
+        name: "hora"
+        widget: "string"
+        required: true
+        hint: "Ej: 18:00"
+      
+      - label: "Duración"
+        name: "duracion"
+        widget: "string"
+        required: true
+        hint: "Ej: 3 horas"
+      
+      - label: "Aforo máximo"
+        name: "aforo"
+        widget: "string"
+        required: true
+        hint: "Ej: 20 personas"
+      
+      - label: "Descripción"
+        name: "descripcion"
+        widget: "text"
+        required: true
+      
+      - label: "Requisitos"
+        name: "requisitos"
+        widget: "list"
+        required: false
+        field:
+          label: "Requisito"
+          name: "requisito"
+          widget: "string"
+      
+      - label: "Destacado"
+        name: "destacado"
+        widget: "boolean"
+        default: false
+      
+      - label: "Contenido adicional"
+        name: "body"
+        widget: "markdown"
+        required: false

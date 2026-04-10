@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración Admin - StarsTrek</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #0f172a 100%);
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #3b82f6, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .card h2 {
+      color: #3b82f6;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+    
+    .card p {
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+    
+    ol, ul {
+      color: #aaa;
+      margin-left: 25px;
+      line-height: 1.8;
+    }
+    
+    li {
+      margin: 10px 0;
+    }
+    
+    code {
+      background: rgba(0,0,0,0.5);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #fbbf24;
+      font-family: 'Monaco', monospace;
+      font-size: 14px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+    
+    .btn:hover {
+      background: #2563eb;
+    }
+    
+    .warning {
+      background: rgba(251, 191, 36, 0.1);
+      border-left: 4px solid #fbbf24;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .success {
+      background: rgba(34, 197, 94, 0.1);
+      border-left: 4px solid #22c55e;
+    }
+    
+    .step {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+    
+    .step-number {
+      width: 30px;
+      height: 30px;
+      background: #3b82f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    .step-content {
+      flex: 1;
+    }
+    
+    .step-content h3 {
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+    
+    .step-content p {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚙️ Configuración del Panel de Administración</h1>
+      <p style="color: #888;">Para habilitar la edición visual, necesitas configurar GitHub OAuth</p>
+    </header>
+    
+    <div class="card">
+      <h2>📋 Resumen</h2>
+      <p>El panel de administración usa <strong>Decap CMS</strong> (antes Netlify CMS), una herramienta que permite editar archivos Markdown directamente desde el navegador y guardar los cambios automáticamente en GitHub.</p>
+      
+      <div class="warning">
+        <strong>⚠️ Requisito:</strong> Necesitas configurar una OAuth App en GitHub para permitir que el CMS acceda al repositorio.
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>🔧 Pasos de configuración</h2>
+      
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Crear OAuth App en GitHub</h3>
+          <p>Ve a <a href="https://github.com/settings/developers" target="_blank" style="color: #3b82f6;">GitHub Developer Settings</a> y crea una nueva OAuth App:</p>
+          <ul>
+            <li><strong>Application name:</strong> StarsTrek CMS</li>
+            <li><strong>Homepage URL:</strong> <code>https://starstrek-web.vercel.app</code></li>
+            <li><strong>Authorization callback URL:</strong> <code>https://starstrek-web.vercel.app/admin/</code></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Obtener Client ID y Secret</h3>
+          <p>Después de crear la app, copia el <strong>Client ID</strong> y genera un <strong>Client Secret</strong>. Los necesitarás para el siguiente paso.</p>
+        </div>
+      </div>
+      
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Elegir backend de autenticación</h3>
+          <p>Tienes dos opciones:</p>
+          <ul>
+            <li><strong>Opción A (Recomendada):</strong> Usar <a href="https://www.netlify.com/" target="_blank" style="color: #3b82f6;">Netlify</a> con Git Gateway (más simple, requiere mover el hosting a Netlify)</li>
+            <li><strong>Opción B:</strong> Configurar un backend OAuth propio (requiere más trabajo técnico)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>✅ Alternativa: Usar Netlify (Más fácil)</h2>
+      <p>La forma más simple de usar Decap CMS es alojar el sitio en <strong>Netlify</strong> en lugar de Vercel. Netlify tiene integración nativa con Decap CMS.</p>
+      
+      <ol>
+        <li>Crea cuenta en <a href="https://app.netlify.com/signup" target="_blank" style="color: #3b82f6;">Netlify</a></li>
+        <li>Importa el repositorio de GitHub</li>
+        <li>Configura Identity en el panel de Netlify</li>
+        <li>Habilita Git Gateway</li>
+        <li>¡Listo! El CMS funcionará automáticamente</li>
+      </ol>
+      
+      <a href="https://docs.netlify.com/visitor-access/git-gateway/" target="_blank" class="btn">Ver documentación de Netlify</a>
+    </div>
+    
+    <div class="card">
+      <h2>💡 Alternativa Simple</h2>
+      <p>Si no quieres configurar OAuth, puedes seguir usando la edición directa en GitHub:</p>
+      
+      <div class="step" style="background: rgba(34, 197, 94, 0.1);">
+        <div class="step-number" style="background: #22c55e;">✓</div>
+        <div class="step-content">
+          <h3 style="color: #22c55e;">Editar directamente en GitHub</h3>
+          <p>La forma más rápida sin configuración adicional. Simplemente edita los archivos Markdown desde la interfaz web de GitHub.</p>
+          <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro/tree/main/src/content" target="_blank" class="btn" style="background: #22c55e;">Ir a GitHub</a>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px; color: #666;">
+      <p>¿Necesitas ayuda? Revisa la <a href="https://decapcms.org/docs/intro/" target="_blank" style="color: #3b82f6;">documentación de Decap CMS</a></p>
+    </div>
+  </div>
+</body>
+</html>
