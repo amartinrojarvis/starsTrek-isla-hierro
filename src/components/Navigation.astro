@@ -1,0 +1,93 @@
+---
+const navLinks = [
+  { href: '#inicio', label: 'Inicio' },
+  { href: '#programa', label: 'Programa' },
+  { href: '#ponentes', label: 'Ponentes' },
+  { href: '#talleres', label: 'Talleres' },
+  { href: '#inscripcion', label: 'Inscripción' },
+];
+---
+
+<nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+  <div class="absolute inset-0 bg-primary/80 backdrop-blur-xl border-b border-white/10"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16 sm:h-20">
+      <a href="#inicio" class="flex items-center gap-2 sm:gap-3 group">
+        <img src="https://www.fototrek.es/images/2026/04/09/logotipo-starstrek-letra-blanca.png" 
+             alt="StarsTrek" 
+             class="h-10 sm:h-14 w-auto drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(59,130,246,0.8)] transition-all duration-300">
+      </a>
+      
+      <div class="hidden md:flex items-center gap-1">
+        {navLinks.map((link) => (
+          <a href={link.href} 
+             class="px-3 lg:px-4 py-2 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300">
+            {link.label}
+          </a>
+        ))}
+        <a href="#inscripcion" 
+           class="ml-3 px-5 lg:px-6 py-2.5 bg-gradient-to-r from-accent to-starlight rounded-full text-sm font-bold text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all duration-300 transform hover:scale-105">
+          Inscribirse
+        </a>
+      </div>
+      
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Abrir menú">
+        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-primary/95 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/50">
+    <div class="px-4 py-4 space-y-2">
+      {navLinks.map((link) => (
+        <a href={link.href} class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 transition-colors rounded-lg">
+          {link.label}
+        </a>
+      ))}
+      <a href="#inscripcion" 
+         class="block mt-4 px-4 py-3 bg-gradient-to-r from-accent to-starlight rounded-lg text-center font-bold text-white">
+        Inscribirse Ahora
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar?.classList.add('shadow-2xl', 'shadow-accent/10');
+    } else {
+      navbar?.classList.remove('shadow-2xl', 'shadow-accent/10');
+    }
+  });
+
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  
+  mobileBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    });
+  });
+</script>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+
+const programa = await getCollection('programa');
+programa.sort((a, b) => {
+  const order = ['viernes', 'sabado', 'domingo'];
+  return order.indexOf(a.slug) - order.indexOf(b.slug);
+});
+---
+
+<section id="programa" class="py-16 sm:py-24 relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-cosmic via-primary to-cosmic"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent"></div>
+  
+  <div class="relative max-w-5xl mx-auto px-4">
+    <div class="text-center mb-10 sm:mb-16">
+      <span class="inline-block px-4 py-1 rounded-full bg-gold/10 text-gold text-xs sm:text-sm font-semibold mb-4">
+        3 Días de Congreso
+      </span>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white via-gold to-starlight bg-clip-text text-transparent">
+        Programa
+      </h2>
+      <p class="text-gray-400 text-base sm:text-lg">
+        Un fin de semana bajo las estrellas de El Hierro
+      </p>
+    </div>
+    
+    <div class="space-y-8 sm:space-y-12">
+      {programa.map((dia) => (
+        <div class="bg-gradient-to-br from-white/5 to-white/[0.02] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/10">
+          <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-accent border-b border-white/10 pb-3 sm:pb-4">
+            {dia.data.dia} <span class="text-gray-400 font-normal text-base sm:text-lg">- {dia.data.fecha}</span>
+          </h3>
+          
+          <div class="space-y-3 sm:space-y-4">
+            {dia.data.horarios.map((item) => (
+              <div class={`flex flex-col sm:flex-row gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl transition-all duration-300 ${
+                item.destacado 
+                  ? 'bg-gradient-to-r from-accent/10 to-starlight/10 border border-accent/30' 
+                  : 'hover:bg-white/5'
+              }`}>
+                <div class="sm:w-20 flex-shrink-0">
+                  <span class={`font-bold text-sm sm:text-base ${item.destacado ? 'text-gold' : 'text-accent'}`}>
+                    {item.hora}
+                  </span>
+                </div>
+                <div class="flex-grow">
+                  <h4 class={`font-bold text-base sm:text-lg ${item.destacado ? 'text-white' : 'text-gray-200'}`}>
+                    {item.titulo}
+                  </h4>
+                  {item.ponente && (
+                    <p class="text-starlight text-xs sm:text-sm font-semibold mt-0.5 sm:mt-1">{item.ponente}</p>
+                  )}
+                  {item.descripcion && (
+                    <p class="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2">{item.descripcion}</p>
+                  )}
+                </div>
+                {item.destacado && (
+                  <div class="flex-shrink-0 mt-2 sm:mt-0">
+                    <span class="inline-block px-2 sm:px-3 py-0.5 sm:py-1 bg-gold/20 text-gold text-xs font-bold rounded-full">
+                      ★ Destacado
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
