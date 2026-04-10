@@ -1,4 +1,4 @@
-// OAuth proxy for Decap CMS - GitHub authentication
+// OAuth proxy for Netlify CMS - GitHub authentication
 // Deployed as Vercel Serverless Function
 
 export default async function handler(req, res) {
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: tokenData.error_description || tokenData.error });
     }
 
-    // Return token in format expected by Decap CMS
+    // Netlify CMS expects this specific message format
     const htmlResponse = `
 <!DOCTYPE html>
 <html>
@@ -67,33 +67,33 @@ export default async function handler(req, res) {
   <title>Authenticating...</title>
   <script>
     (function() {
-      function receiveMessage(e) {
-        if (!e.data || e.data.type !== 'decap-cms-auth') return;
-        
-        window.opener.postMessage(
-          {
-            type: 'decap-cms-auth',
-            token: '${tokenData.access_token}',
-            provider: 'github'
-          },
-          e.origin
-        );
-        window.removeEventListener('message', receiveMessage);
+      var token = '${tokenData.access_token}';
+      
+      // Send message to parent window (Netlify CMS)
+      function sendMessage() {
+        if (window.opener) {
+          // Format expected by Netlify CMS
+          window.opener.postMessage(
+            'authorization:github:success:' + JSON.stringify({
+              token: token,
+              provider: 'github'
+            }),
+            '*'
+          );
+        }
       }
       
-      window.addEventListener('message', receiveMessage);
+      // Try immediately and after a delay
+      sendMessage();
+      setTimeout(sendMessage, 500);
+      setTimeout(sendMessage, 1000);
       
-      // Auto-send token after a short delay
-      setTimeout(function() {
-        window.opener.postMessage(
-          {
-            type: 'decap-cms-auth',
-            token: '${tokenData.access_token}',
-            provider: 'github'
-          },
-          '*'
-        );
-      }, 1000);
+      // Also listen for ping from parent
+      window.addEventListener('message', function(e) {
+        if (e.data === 'authorizing:github') {
+          sendMessage();
+        }
+      });
     })();
   </script>
 </head>
@@ -103,7 +103,7 @@ export default async function handler(req, res) {
   <script>
     setTimeout(function() {
       window.close();
-    }, 1500);
+    }, 2000);
   </script>
 </body>
 </html>`;
