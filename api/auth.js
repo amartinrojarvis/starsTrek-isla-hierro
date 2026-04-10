@@ -59,7 +59,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: tokenData.error_description || tokenData.error });
     }
 
-    // Netlify CMS expects this specific message format
+    // Netlify CMS popup expects the token to be passed via postMessage
+    // The opener window listens for 'message' events
     const htmlResponse = `
 <!DOCTYPE html>
 <html>
@@ -68,30 +69,38 @@ export default async function handler(req, res) {
   <script>
     (function() {
       var token = '${tokenData.access_token}';
+      var sent = false;
       
-      // Send message to parent window (Netlify CMS)
-      function sendMessage() {
+      function sendToken() {
+        if (sent) return;
+        
         if (window.opener) {
-          // Format expected by Netlify CMS
-          window.opener.postMessage(
-            'authorization:github:success:' + JSON.stringify({
-              token: token,
-              provider: 'github'
-            }),
-            '*'
-          );
+          // Netlify CMS expects this exact format
+          var message = 'authorization:github:success:' + JSON.stringify({
+            token: token,
+            provider: 'github'
+          });
+          
+          window.opener.postMessage(message, '*');
+          sent = true;
+          
+          // Close after sending
+          setTimeout(function() {
+            window.close();
+          }, 500);
         }
       }
       
-      // Try immediately and after a delay
-      sendMessage();
-      setTimeout(sendMessage, 500);
-      setTimeout(sendMessage, 1000);
+      // Try multiple times
+      sendToken();
+      setTimeout(sendToken, 100);
+      setTimeout(sendToken, 500);
+      setTimeout(sendToken, 1000);
       
-      // Also listen for ping from parent
+      // Also respond to ping from parent
       window.addEventListener('message', function(e) {
-        if (e.data === 'authorizing:github') {
-          sendMessage();
+        if (e.data && e.data.indexOf && e.data.indexOf('authorizing') !== -1) {
+          sendToken();
         }
       });
     })();
@@ -100,11 +109,9 @@ export default async function handler(req, res) {
 <body>
   <h2>✅ Autenticación exitosa</h2>
   <p>Cerrando ventana...</p>
-  <script>
-    setTimeout(function() {
-      window.close();
-    }, 2000);
-  </script>
+  <noscript>
+    <p>Error: JavaScript es necesario para la autenticación.</p>
+  </noscript>
 </body>
 </html>`;
 
