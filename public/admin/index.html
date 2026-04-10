@@ -8,15 +8,11 @@
   <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css">
   <style>
     /* Personalización del CMS para StarsTrek */
-    
-    /* Color principal (azul espacial) */
     :root {
       --primary-color: #3b82f6;
       --primary-color-dark: #1e3a8a;
-      --secondary-color: #fbbf24;
     }
     
-    /* Header del CMS */
     [class*="SidebarContainer"] {
       background: linear-gradient(180deg, #0f172a 0%, #0a0a0a 100%) !important;
     }
@@ -26,7 +22,6 @@
       border-bottom: 2px solid #3b82f6 !important;
     }
     
-    /* Botones principales */
     [class*="StyledButton"],
     button[class*="Button"] {
       background: var(--primary-color) !important;
@@ -37,160 +32,23 @@
       background: var(--primary-color-dark) !important;
     }
     
-    /* Links y elementos activos */
     a, [class*="Active"] {
       color: var(--primary-color) !important;
     }
     
-    /* Cards de colecciones */
-    [class*="CollectionCard"] {
-      border-left: 4px solid var(--primary-color) !important;
-    }
-    
-    /* Inputs y campos */
     input:focus, textarea:focus, select:focus {
       border-color: var(--primary-color) !important;
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
     }
-    
-    /* Logo personalizado en el header */
-    [class*="SidebarHeader"]::before {
-      content: "⭐";
-      font-size: 24px;
-      margin-right: 10px;
-    }
-    
-    /* Mejorar contraste en modo oscuro del CMS */
-    [class*="FieldLabel"] {
-      color: #333 !important;
-      font-weight: 600 !important;
-    }
-    
-    /* Estilos para el preview */
-    .cms-editor-visual {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
   </style>
 </head>
 <body>
-  <!-- Contenedor del CMS -->
   <div id="nc-root"></div>
-
-  <!-- Cargar Decap CMS -->
+  
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    // Personalización adicional del CMS
-    CMS.registerPreviewStyle("/admin/preview.css");
-    
-    // Registrar el panel de ponentes con preview personalizado
-    CMS.registerPreviewTemplate("ponentes", createClass({
-      render: function() {
-        var entry = this.props.entry;
-        var nombre = entry.getIn(['data', 'nombre']);
-        var rol = entry.getIn(['data', 'rol']);
-        var bio = entry.getIn(['data', 'bio']);
-        var foto = entry.getIn(['data', 'fotoRetrato']);
-        
-        return h('div', {className: "preview-ponente"},
-          h('h2', {}, nombre),
-          h('h3', {}, rol),
-          h('p', {}, bio)
-        );
-      }
-    }));
-    
-    // Configuración de idioma español
-    CMS.registerLocale('es', {
-      auth: {
-        login: 'Iniciar sesión',
-        loginWithGitHub: 'Iniciar sesión con GitHub',
-        loginWithGitLab: 'Iniciar sesión con GitLab',
-        errors: {
-          emailNotConfirmed: 'El correo no está confirmado.',
-          identityNotConfirmed: 'La identidad no está confirmada.'
-        }
-      },
-      app: {
-        header: {
-          content: 'Contenido',
-          workflow: 'Flujo de trabajo',
-          media: 'Medios',
-          quickAdd: 'Añadir rápido'
-        },
-        app: {
-          errorHeader: 'Error al cargar la configuración del CMS',
-          configErrors: 'Errores de configuración',
-          checkConfig: 'Comprueba el archivo config.yml'
-        }
-      },
-      collection: {
-        sidebar: {
-          collections: 'Colecciones',
-          allCollections: 'Todas las colecciones',
-          searchAll: 'Buscar en todo',
-          searchIn: 'Buscar en'
-        },
-        collectionTop: {
-          sortBy: 'Ordenar por',
-          viewAs: 'Ver como',
-          newButton: 'Nuevo %{collectionLabel}',
-          ascending: 'Ascendente',
-          descending: 'Descendente'
-        },
-        entries: {
-          loadingEntries: 'Cargando entradas...',
-          cachingEntries: 'Guardando entradas en caché...',
-          longerLoading: 'Esto puede tardar unos minutos',
-          noEntries: 'No hay entradas'
-        },
-        defaultFields: {
-          author: {
-            label: 'Autor'
-          },
-          updatedOn: {
-            label: 'Actualizado el'
-          }
-        }
-      },
-      editor: {
-        editorControlPane: {
-          widget: {
-            required: '%{fieldLabel} es obligatorio.',
-            regexPattern: '%{fieldLabel} no coincide con el patrón: %{pattern}.',
-            processing: '%{fieldLabel} está procesándose.',
-            range: '%{fieldLabel} debe estar entre %{minValue} y %{maxValue}.',
-            min: '%{fieldLabel} debe ser al menos %{minValue}.',
-            max: '%{fieldLabel} debe ser %{maxValue} o menos.',
-            rangeCount: '%{fieldLabel} debe tener entre %{minCount} y %{maxCount} elemento(s).',
-            rangeCountExact: '%{fieldLabel} debe tener exactamente %{count} elemento(s).',
-            minCount: '%{fieldLabel} debe tener al menos %{minCount} elemento(s).',
-            maxCount: '%{fieldLabel} debe ser %{maxCount} o menos.',
-            invalidPath: "'%{path}' no es una ruta válida",
-            pathExists: "La ruta '%{path}' ya existe"
-          }
-        },
-        editor: {
-          onLeavePage: '¿Estás seguro de que quieres salir de esta página?',
-          onUpdatingWithUnsavedChanges: 'Tienes cambios sin guardar, por favor guárdalos antes de actualizar el estado.',
-          onPublishingNotReady: 'Por favor, actualiza el estado a "Listo" antes de publicar.',
-          onPublishingWithUnsavedChanges: 'Tienes cambios sin guardar, por favor guárdalos antes de publicar.',
-          onPublishing: '¿Estás seguro de que quieres publicar esta entrada?',
-          onDeleteWithUnsavedChanges: '¿Estás seguro de que quieres eliminar esta entrada publicada, así como los cambios no guardados de la sesión actual?',
-          onDeletePublishedEntry: '¿Estás seguro de que quieres eliminar esta entrada publicada?',
-          onDeleteUnpublishedChanges: 'Se eliminarán todos los cambios no publicados. ¿Estás seguro de que quieres eliminarlos?',
-          onDeleteUnpublishedEntry: 'Se eliminarán todos los cambios no publicados. ¿Estás seguro de que quieres eliminar esta entrada?'
-        },
-        editorWidgets: {
-          markdown: {
-            richText: 'Texto enriquecido',
-            markdown: 'Markdown'
-          }
-        }
-      }
-    });
-    
-    // Iniciar CMS
+    // Solo inicializar, sin personalizaciones que causen errores
     CMS.init();
   </script>
 </body>

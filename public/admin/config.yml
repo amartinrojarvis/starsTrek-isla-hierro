@@ -8,12 +8,6 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# Configuración de editorial workflow (opcional)
-publish_mode: editorial_workflow
-
-# Configuración de idioma
-locale: 'es'
-
 # Colecciones
 collections:
   - name: "ponentes"
