@@ -11,16 +11,15 @@
   <div id="nc-root"></div>
   <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
   <script>
-    // Usar proxy OAuth gratuito de https://github.com/vencax/netlify-cms-github-oauth-provider
-    // Este proxy es mantenido por la comunidad y funciona sin configuración propia
+    // Configuración con tu propia OAuth App de GitHub
     CMS.init({
       config: {
         backend: {
           name: 'github',
           repo: 'amartinrojarvis/starsTrek-isla-hierro',
           branch: 'main',
-          base_url: 'https://cms-auth.herokuapp.com',
-          auth_endpoint: 'auth'
+          base_url: 'https://starstrek-web.vercel.app',
+          auth_endpoint: 'api/auth'
         },
         media_folder: 'public/images/uploads',
         public_folder: '/images/uploads',

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
   // OAuth Step 1: Redirect to GitHub for authorization
   if (!code) {
-    const clientId = process.env.GITHUB_CLIENT_ID || 'Ov23liMYbWeqeL4B0aOH';
+    const clientId = process.env.GITHUB_CLIENT_ID || 'Ov23lijTIYBaFOyrHjYu';
     const redirectUri = encodeURIComponent('https://starstrek-web.vercel.app/api/auth');
     const scope = encodeURIComponent('repo read:user user:email');
     
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
   // OAuth Step 2: Exchange code for access token
   try {
-    const clientId = process.env.GITHUB_CLIENT_ID || 'Ov23liMYbWeqeL4B0aOH';
+    const clientId = process.env.GITHUB_CLIENT_ID || 'Ov23lijTIYBaFOyrHjYu';
     const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
     if (!clientSecret) {
