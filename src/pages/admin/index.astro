@@ -1,0 +1,402 @@
+---
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'startrek2024';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - StarsTrek</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    
+    .logout-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .login-screen {
+      max-width: 400px;
+      margin: 100px auto;
+      background: #1a1a1a;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .login-screen h2 {
+      margin-bottom: 30px;
+      color: #3b82f6;
+    }
+    
+    .login-screen input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+      background: #0a0a0a;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    
+    .login-screen button {
+      width: 100%;
+      padding: 12px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .login-screen button:hover {
+      background: #2563eb;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+    }
+    
+    .sidebar {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    
+    .sidebar h3 {
+      color: #3b82f6;
+      margin-bottom: 15px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    
+    .file-list {
+      list-style: none;
+    }
+    
+    .file-list li {
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 14px;
+    }
+    
+    .file-list li:hover {
+      background: #2a2a2a;
+    }
+    
+    .file-list li.active {
+      background: #1e3a8a;
+    }
+    
+    .editor {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      height: calc(100vh - 140px);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .editor-header h3 {
+      color: #3b82f6;
+    }
+    
+    .btn-save {
+      background: #22c55e;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .btn-save:hover {
+      background: #16a34a;
+    }
+    
+    .btn-save:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    
+    textarea {
+      flex: 1;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 15px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: none;
+    }
+    
+    .message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+    }
+    
+    .message.success {
+      background: #22c55e;
+    }
+    
+    .message.error {
+      background: #dc2626;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .section-title {
+      color: #666;
+      font-size: 12px;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-screen">
+    <h2>🔐 Admin StarsTrek</h2>
+    <input type="password" id="password" placeholder="Contraseña" autocomplete="off">
+    <button onclick="login()">Acceder</button>
+    <p style="margin-top: 20px; color: #666; font-size: 14px;">
+      Acceso restringido solo para administradores
+    </p>
+  </div>
+
+  <!-- Main Admin Panel -->
+  <div id="adminPanel" class="container hidden">
+    <header>
+      <h1>🚀 StarsTrek - Panel de Administración</h1>
+      <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+    </header>
+    
+    <div class="grid">
+      <aside class="sidebar">
+        <div class="section-title">Contenido</div>
+        <h3>Ponentes</h3>
+        <ul class="file-list" id="ponentesList"></ul>
+        
+        <h3>Programa</h3>
+        <ul class="file-list" id="programaList"></ul>
+        
+        <h3>Talleres</h3>
+        <ul class="file-list" id="talleresList"></ul>
+      </aside>
+      
+      <main class="editor">
+        <div class="editor-header">
+          <h3 id="fileName">Selecciona un archivo</h3>
+          <button class="btn-save" id="saveBtn" onclick="saveFile()" disabled>💾 Guardar cambios</button>
+        </div>
+        <textarea id="editor" placeholder="Selecciona un archivo para editar..."></textarea>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASSWORD = '{ADMIN_PASSWORD}';
+    let currentFile = null;
+    let currentContent = '';
+    
+    const files = {
+      ponentes: [
+        'daniel-lopez.md',
+        'carlos-solinis.md',
+        'obed-gamart.md',
+        'alejandro-rodriguez.md'
+      ],
+      programa: [
+        'viernes.md',
+        'sabado.md',
+        'domingo.md'
+      ],
+      talleres: [
+        'taller-viernes.md',
+        'taller-sabado.md'
+      ]
+    };
+    
+    function login() {
+      const password = document.getElementById('password').value;
+      if (password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminAuth', 'true');
+        showAdminPanel();
+        loadFileLists();
+      } else {
+        showMessage('Contraseña incorrecta', 'error');
+      }
+    }
+    
+    function logout() {
+      sessionStorage.removeItem('adminAuth');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('password').value = '';
+    }
+    
+    function showAdminPanel() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+    }
+    
+    function loadFileLists() {
+      // Cargar listas de archivos
+      files.ponentes.forEach(file => {
+        addFileToList('ponentesList', file, 'ponentes');
+      });
+      files.programa.forEach(file => {
+        addFileToList('programaList', file, 'programa');
+      });
+      files.talleres.forEach(file => {
+        addFileToList('talleresList', file, 'talleres');
+      });
+    }
+    
+    function addFileToList(listId, file, type) {
+      const li = document.createElement('li');
+      li.textContent = file.replace('.md', '').replace(/-/g, ' ');
+      li.onclick = () => loadFile(type, file, li);
+      document.getElementById(listId).appendChild(li);
+    }
+    
+    async function loadFile(type, file, element) {
+      // Quitar clase active de todos
+      document.querySelectorAll('.file-list li').forEach(li => li.classList.remove('active'));
+      element.classList.add('active');
+      
+      currentFile = { type, file };
+      document.getElementById('fileName').textContent = `${type}/${file}`;
+      
+      try {
+        const response = await fetch(`/api/content?type=${type}&file=${file}`);
+        if (response.ok) {
+          const data = await response.json();
+          currentContent = data.content;
+          document.getElementById('editor').value = data.content;
+          document.getElementById('saveBtn').disabled = false;
+        } else {
+          showMessage('Error al cargar el archivo', 'error');
+        }
+      } catch (error) {
+        showMessage('Error de conexión', 'error');
+      }
+    }
+    
+    async function saveFile() {
+      if (!currentFile) return;
+      
+      const content = document.getElementById('editor').value;
+      
+      try {
+        const response = await fetch('/api/content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: currentFile.type,
+            file: currentFile.file,
+            content
+          })
+        });
+        
+        if (response.ok) {
+          currentContent = content;
+          showMessage('✅ Cambios guardados correctamente', 'success');
+        } else {
+          const error = await response.json();
+          showMessage(`Error: ${error.message}`, 'error');
+        }
+      } catch (error) {
+        showMessage('Error de conexión', 'error');
+      }
+    }
+    
+    function showMessage(text, type) {
+      const msg = document.createElement('div');
+      msg.className = `message ${type}`;
+      msg.textContent = text;
+      document.body.appendChild(msg);
+      
+      setTimeout(() => msg.remove(), 3000);
+    }
+    
+    // Verificar sesión al cargar
+    if (sessionStorage.getItem('adminAuth') === 'true') {
+      showAdminPanel();
+      loadFileLists();
+    }
+    
+    // Enter para login
+    document.getElementById('password').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+---
+// Página de administración que redirige a GitHub para edición
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Contenido - StarsTrek</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #0f172a 100%);
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #3b82f6, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: #888;
+      font-size: 1.1rem;
+    }
+    
+    .method-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    
+    .method-card:hover {
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+    }
+    
+    .method-card h2 {
+      color: #3b82f6;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .method-card p {
+      color: #aaa;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+    
+    .btn-secondary {
+      background: #1e3a8a;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #1e40af;
+    }
+    
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .file-item {
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .file-item h4 {
+      color: #fbbf24;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    
+    .file-item a {
+      display: block;
+      color: #3b82f6;
+      text-decoration: none;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 4px;
+      transition: background 0.2s;
+      font-size: 14px;
+    }
+    
+    .file-item a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .steps {
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .steps ol {
+      margin-left: 20px;
+      color: #aaa;
+    }
+    
+    .steps li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    
+    .steps code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fbbf24;
+    }
+    
+    .preview-box {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 15px;
+      overflow-x: auto;
+    }
+    
+    .preview-box pre {
+      color: #4ade80;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    .badge {
+      display: inline-block;
+      background: #22c55e;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>✏️ Editar Contenido</h1>
+      <p class="subtitle">Elige cómo quieres editar el contenido de StarsTrek</p>
+    </header>
+    
+    <!-- MÉTODO 1: GitHub Web Editor -->
+    <div class="method-card">
+      <h2>🚀 MÉTODO RECOMENDADO: GitHub Web</h2>
+      <p>Edita directamente desde la interfaz web de GitHub. Los cambios se publican automáticamente en menos de 2 minutos.</p>
+      
+      <div class="file-grid">
+        <div class="file-item">
+          <h4>📸 Ponentes</h4>
+          <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro/tree/main/src/content/ponentes" target="_blank">
+            → Ver archivos de ponentes
+          </a>
+        </div>
+        <div class="file-item">
+          <h4>📅 Programa</h4>
+          <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro/tree/main/src/content/programa" target="_blank">
+            → Ver archivos de programa
+          </a>
+        </div>
+        <div class="file-item">
+          <h4>🎓 Talleres</h4>
+          <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro/tree/main/src/content/talleres" target="_blank">
+            → Ver archivos de talleres
+          </a>
+        </div>
+      </div>
+      
+      <div class="steps">
+        <strong style="color: #fff;">Cómo editar:</strong>
+        <ol>
+          <li>Haz clic en uno de los enlaces de arriba</li>
+          <li>Selecciona el archivo que quieres editar (ej: <code>daniel-lopez.md</code>)</li>
+          <li>Haz clic en el lápiz ✏️ ("Edit this file")</li>
+          <li>Realiza tus cambios en el editor</li>
+          <li>Desplázate abajo y escribe un mensaje de commit (ej: "Actualiza bio de Daniel")</li>
+          <li>Haz clic en <strong>"Commit changes"</strong></li>
+          <li>¡Listo! Vercel reconstruirá el sitio automáticamente</li>
+        </ol>
+      </div>
+      
+      <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro" target="_blank" class="btn btn-primary" style="margin-top: 20px;">
+        🌐 Abrir GitHub
+      </a>
+    </div>
+    
+    <!-- MÉTODO 2: Editor Local -->
+    <div class="method-card">
+      <h2>💻 Editar Localmente</h2>
+      <p>Para ediciones masivas o trabajo offline, edita los archivos directamente en tu servidor y sube los cambios.</p>
+      
+      <div class="steps">
+        <strong style="color: #fff;">Comandos rápidos:</strong>
+        <div class="preview-box">
+          <pre># Editar un archivo
+nano ~/proyectos/starstrek-web/src/content/ponentes/daniel-lopez.md
+
+# Guardar y salir (en nano): Ctrl+X, luego Y, luego Enter
+
+# Subir cambios
+cd ~/proyectos/starstrek-web
+git add .
+git commit -m "Actualiza contenido"
+git push origin main
+
+# O deploy directo
+npx vercel --prod</pre>
+        </div>
+      </div>
+      
+      <div class="file-grid" style="margin-top: 20px;">
+        <div class="file-item">
+          <h4>Rutas de archivos:</h4>
+          <code style="color: #888; font-size: 12px;">
+            ~/proyectos/starstrek-web/src/content/<br>
+            ├── ponentes/<br>
+            │   ├── daniel-lopez.md<br>
+            │   ├── carlos-solinis.md<br>
+            │   ├── obed-gamart.md<br>
+            │   └── alejandro-rodriguez.md<br>
+            ├── programa/<br>
+            │   ├── viernes.md<br>
+            │   ├── sabado.md<br>
+            │   └── domingo.md<br>
+            └── talleres/<br>
+                ├── taller-viernes.md<br>
+                └── taller-sabado.md
+          </code>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Estructura de archivos -->
+    <div class="method-card">
+      <h2>📝 Estructura de los archivos</h2>
+      <p>Todos los archivos usan formato Markdown con frontmatter YAML.</p>
+      
+      <div class="preview-box">
+        <pre>---
+nombre: "Daniel López"
+rol: "Astrofotógrafo Canario"
+bio: "Texto de la biografía..."
+instagram: "https://instagram.com/..."
+orden: 1
+---
+
+Texto extendido opcional aquí (soporta Markdown)</pre>
+      </div>
+      
+      <p style="margin-top: 15px; font-size: 14px;">
+        <strong style="color: #3b82f6;">Tipos permitidos en programa:</strong><br>
+        <code>apertura</code>, <code>inauguracion</code>, <code>ponencia</code>, 
+        <code>break</code>, <code>taller</code>, <code>clausura</code>, <code>actividad</code>
+      </p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px; color: #666;">
+      <p>🔗 Repositorio: <a href="https://github.com/amartinrojarvis/starsTrek-isla-hierro" style="color: #3b82f6;">github.com/amartinrojarvis/starsTrek-isla-hierro</a></p>
+      <p style="margin-top: 10px;">🌐 Web: <a href="https://starstrek-web.vercel.app" style="color: #3b82f6;">starstrek-web.vercel.app</a></p>
+    </div>
+  </div>
+</body>
+</html>
